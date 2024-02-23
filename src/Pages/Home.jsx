@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Form from 'react-bootstrap/Form';
 import {Button, Container} from "react-bootstrap";
+import Emergente from "../Components/Emergente.jsx";
 
 function Home() {
     const [pokemonData, setPokemonData] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+
+    const handleShowModal = function (){
+        setShowModal(true);
+    };
 
     useEffect(() => {
         fetch("https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0")
@@ -30,9 +36,12 @@ function Home() {
                     </option>
                 ))}
             </datalist>
-            <Button className="m-3">
+            <Button className="m-3" onClick={handleShowModal}>
                 Ver
             </Button>
+            {showModal && <Emergente onClose={() => setShowModal(false)} />}
+
+
         </Container>
     );
 }
